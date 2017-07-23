@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class AbstractListObject {
+public abstract class AbstractIdentityObject {
     private Integer id;
 }

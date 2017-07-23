@@ -1,14 +1,19 @@
 package pl.pollub.api.commons.abstracts;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class AbstractCrud<T extends AbstractListObject> {
+@Data
+@EqualsAndHashCode(callSuper = false)
+public abstract class AbstractCrud<T extends AbstractIdentityObject> extends AbstractIdentityObject {
 
-    private List<T> elements = new ArrayList<>();
+    protected List<T> elements = new ArrayList<>();
 
-    private AtomicInteger counter = new AtomicInteger();
+    protected AtomicInteger counter = new AtomicInteger();
 
     /**
      * Saves new item or updates existing if id matches item in list
@@ -18,6 +23,7 @@ public abstract class AbstractCrud<T extends AbstractListObject> {
         if(foundItem != null)
             remove(foundItem);
         elements.add(object);
+        //counter.incrementAndGet();
         return object;
     }
 
@@ -45,4 +51,5 @@ public abstract class AbstractCrud<T extends AbstractListObject> {
     public Integer generateId(){
         return counter.incrementAndGet();
     }
+
 }
