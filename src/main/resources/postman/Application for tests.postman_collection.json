@@ -1,0 +1,186 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Application for tests",
+		"_postman_id": "5150e4f4-51a8-8413-2d7a-6384734db4c5",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"url": "http://localhost:8080/api/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"User1\""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"url": "http://localhost:8080/api/user",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\": \"todo2\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get one user",
+			"request": {
+				"url": "http://localhost:8080/api/user/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":1, \"content\":\"siema\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete user",
+			"request": {
+				"url": "http://localhost:8080/api/user/1",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":1, \"content\":\"siema\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create todo for user",
+			"request": {
+				"url": "http://localhost:8080/api/user/todos/2",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\":\"Todo1\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get all users todos",
+			"request": {
+				"url": "http://localhost:8080/api/user/todos/2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\":\"Todo4\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get one task from user",
+			"request": {
+				"url": "http://localhost:8080/api/user/todos/2/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete one user task",
+			"request": {
+				"url": "http://localhost:8080/api/user/todos/2/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create new collab",
+			"request": {
+				"url": "http://localhost:8080/api/collabs",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add user to collab",
+			"request": {
+				"url": "http://localhost:8080/api/collabs/1/2",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get all collabs info",
+			"request": {
+				"url": "http://localhost:8080/api/collabs",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
