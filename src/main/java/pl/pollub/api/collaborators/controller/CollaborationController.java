@@ -2,6 +2,7 @@ package pl.pollub.api.collaborators.controller;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,16 +17,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/collabs")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CollaborationController {
 
     private final @NonNull CollaborationList collaborationList;
     private final @NonNull UserList userList;
-
-    @Autowired
-    public CollaborationController(CollaborationList collaborationList, UserList userList) {
-        this.collaborationList = collaborationList;
-        this.userList = userList;
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,7 +36,7 @@ public class CollaborationController {
     }
 
     @RequestMapping(value = "/{collabId}",method = RequestMethod.POST)
-    public void addTodoToCollaboration(@PathVariable("collabId")Integer collabId, @RequestBody TextNode todo){
+    public void addSharedTodoToCollaboration(@PathVariable("collabId")Integer collabId, @RequestBody TextNode todo){
         Collaboration collab = collaborationList.findOne(collabId);
         collab.addSharedItem(GeneralFactory.createTodo(collab.getSharedTodos().generateId(),todo.asText()));
     }

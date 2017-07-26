@@ -1,5 +1,6 @@
 package pl.pollub.todoTest;
 
+import org.junit.Before;
 import org.junit.Test;
 import pl.pollub.api.todo.model.Todo;
 import pl.pollub.api.todo.model.TodoList;
@@ -14,10 +15,16 @@ import static pl.pollub.api.commons.factory.GeneralFactory.createTodo;
 
 public class TodoListTest {
 
+    private TodoList todoList;
+
+    @Before
+    public void before(){
+        todoList = new TodoList();
+    }
+
     @Test
     public void shouldAddTaskToListAndBePresent(){
         //given
-        TodoList todoList = new TodoList();
         Todo todo1 = todoList.save(createTodo(1,"test1"));
 
         //when
@@ -31,7 +38,6 @@ public class TodoListTest {
     @Test
     public void shouldUpdateListItemWithSameId(){
         //given
-        TodoList todoList = new TodoList();
         Todo todo1 = todoList.save(createTodo(1,"test1"));
 
         //when
@@ -45,7 +51,6 @@ public class TodoListTest {
     @Test
     public void removedItemShouldNotBeOnTheList(){
         //given
-        TodoList todoList = new TodoList();
         Todo todo1 = todoList.save(createTodo(1,"test1"));
         Todo todo2 = todoList.save(createTodo(2,"test2"));
 
@@ -59,19 +64,31 @@ public class TodoListTest {
     @Test
     public void shouldAddListOfItemsToCurrentListWithNewId(){
         //given
-        TodoList todoList = new TodoList();
-        Todo todo1 = todoList.save(createTodo(1,"test1"));
-        Todo todo2 = todoList.save(createTodo(2,"test2"));
+        Todo todo1 = todoList.save(createTodo(todoList.generateId(),"test1"));
+        Todo todo2 = todoList.save(createTodo(todoList.generateId(),"test2"));
+        //specify todos with random ids
         Todo todo3 = createTodo(1, "test3");
         Todo todo4 = createTodo(2, "test4");
         List<Todo> newTodos = Arrays.asList(todo3,todo4);
 
         //when
-        todoList.addListOfTodos(newTodos);
+        todoList.addListOfTodos(newTodos);//should generate new id for new todos
 
         //then
         assertEquals(4,todoList.getElements().size());
         assertNotEquals(todo3.getId(),todoList.getElements().get(2).getId());
+    }
+
+    //should not throw outOfBound Exception
+    @Test
+    public void shouldReturnNullWhenEntityWithSpecifiedIdWasntFound(){
+        //given -> before
+
+        //when
+        Todo foundElement = todoList.findOne(100);
+
+        //then
+        assertEquals("Item with specified id was somehow found",foundElement,null);
     }
 
 

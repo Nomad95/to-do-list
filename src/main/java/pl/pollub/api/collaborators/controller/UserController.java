@@ -2,6 +2,7 @@ package pl.pollub.api.collaborators.controller;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,15 +19,11 @@ import static pl.pollub.api.commons.factory.GeneralFactory.createNewUser;
 
 @RestController
 @RequestMapping(value = "/api/user")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private final @NonNull
     UserList userList;
-
-    @Autowired
-    public UserController(UserList userList) {
-        this.userList = userList;
-    }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -52,7 +49,7 @@ public class UserController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    //-- User todos --//
+    //-- User private todos --//
 
     @RequestMapping(value = "/todos/{userId}",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)

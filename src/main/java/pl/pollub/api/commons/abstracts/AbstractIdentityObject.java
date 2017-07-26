@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class AbstractIdentityObject {
-    private Integer id;
+    protected Integer id;
 }

@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
@@ -23,7 +24,6 @@ public abstract class AbstractCrud<T extends AbstractIdentityObject> extends Abs
         if(foundItem != null)
             remove(foundItem);
         elements.add(object);
-        //counter.incrementAndGet();
         return object;
     }
 
@@ -35,9 +35,9 @@ public abstract class AbstractCrud<T extends AbstractIdentityObject> extends Abs
      * Returns null if id isnt present in list
      */
     public T findOne(Integer id){
-        if (elements.stream().peek(el->{}).anyMatch(el->el.getId().equals(id)))
-            return elements.stream().peek(el->{}).filter(el->el.getId().equals(id)).findFirst().get();
-        return null;
+        Optional<T> element = elements.stream().peek(el -> {
+        }).filter(el -> el.getId().equals(id)).findFirst();
+        return element.orElse(null);
     }
 
     public boolean removeById(Integer id) {

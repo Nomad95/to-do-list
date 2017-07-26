@@ -10,11 +10,11 @@ public class GeneralFactory {
         return new Todo(id,content);
     }
 
-    static public User createNewUser(Integer id, String name){
+    public static User createNewUser(Integer id, String name){
         return new User(id,name);
     }
 
-    static public Collaboration createNewCollaboration(Integer id){
+    public static Collaboration createNewCollaboration(Integer id){
         return new Collaboration(id);
     }
 }

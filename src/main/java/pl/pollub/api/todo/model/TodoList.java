@@ -19,6 +19,6 @@ public class TodoList extends AbstractCrud<Todo> implements GenericCrud<Todo> {
      * Adds todos list to existing list generating new id
      */
     public void addListOfTodos(List<Todo> todos){
-        todos.forEach((todo)->save(GeneralFactory.createTodo(generateId(),todo.getContent())));
+        todos.forEach(todo->save(GeneralFactory.createTodo(generateId(),todo.getContent())));
     }
 }
