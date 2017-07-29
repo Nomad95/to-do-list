@@ -34,12 +34,6 @@ public class CollaborationController {
         collaborationList.findOne(collabId).addUser(foundUser);
     }
 
-    /**
-     * Swagger demo.
-     * Adds an todo task to existing collaboration
-     * @param collabId an collaboration id in which we want to add specified todo
-     * @param todo a name of todo task
-     */
     @RequestMapping(value = "/{collabId}",method = RequestMethod.POST)
     public void addSharedTodoToCollaboration(@PathVariable("collabId")Integer collabId, @RequestBody TextNode todo){
         Collaboration collab = collaborationList.findOne(collabId);

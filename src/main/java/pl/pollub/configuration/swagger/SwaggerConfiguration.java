@@ -8,6 +8,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.time.LocalDate;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
@@ -18,6 +20,8 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/api/**"))
-                .build();
+                .build()
+                .directModelSubstitute(LocalDate.class,
+                        String.class);
     }
 }
