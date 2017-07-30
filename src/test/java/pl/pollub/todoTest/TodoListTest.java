@@ -4,13 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.pollub.api.todo.model.Todo;
 import pl.pollub.api.todo.model.TodoList;
+import pl.pollub.exception.exceptions.ForbiddenTodoOperationException;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
+import static pl.pollub.api.commons.factory.GeneralFactory.createNewUser;
 import static pl.pollub.api.commons.factory.GeneralFactory.createTodo;
 
 public class TodoListTest {
@@ -91,5 +92,33 @@ public class TodoListTest {
         assertEquals("Item with specified id was somehow found",foundElement,null);
     }
 
+    @Test(expected = ForbiddenTodoOperationException.class)
+    public void shouldThrowExceptionTryingToFinishFinishedTodo(){
+        //given
+        todoList.save(createTodo(1,"test1"));
+        todoList.makeTodoAccomplished(1,createNewUser(1,"user1"));
+
+        //when
+        todoList.makeTodoAccomplished(1,createNewUser(2,"user2"));
+
+        //then exception
+    }
+
+    @Test
+    public void shouldReturnOnlyUnfinishedTodos(){
+        //given
+        Todo todo1 = todoList.save(createTodo(1, "test1"));
+        todoList.save(createTodo(2, "test2"));
+        todoList.save(createTodo(3, "test3"));
+        Todo todo4 = todoList.save(createTodo(4, "test4"));
+        Todo todo2 = todoList.makeTodoAccomplished(2, createNewUser(2, "user1"));
+        Todo todo3 = todoList.makeTodoAccomplished(3, createNewUser(1, "user1"));
+
+        //when
+        List<Todo> unfinishedTodos = todoList.getUnfinishedTodos();
+
+        //then
+        assertThat(unfinishedTodos,not(hasItems(todo2,todo3)));
+    }
 
 }

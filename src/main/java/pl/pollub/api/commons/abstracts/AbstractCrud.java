@@ -2,6 +2,7 @@ package pl.pollub.api.commons.abstracts;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import pl.pollub.exception.exceptions.ElementNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,10 @@ public abstract class AbstractCrud<T extends AbstractIdentityObject> extends Abs
         return element.orElse(null);
     }
 
-    public boolean removeById(Integer id) {
-        return remove(findOne(id));
+    public void removeById(Integer id) {
+        boolean remove = remove(findOne(id));
+        if (!remove)
+            throw new ElementNotFoundException();
     }
 
     public List<T> findAll(){
