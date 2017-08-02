@@ -1,5 +1,6 @@
 package pl.pollub.api.collaborators.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Collaboration extends AbstractIdentityObject implements GenericColl
     }
 
     @Override
+    @JsonIgnore
     public List<User> getAllUsers() {
         return colaborationUsers.findAll();
     }
@@ -54,6 +56,7 @@ public class Collaboration extends AbstractIdentityObject implements GenericColl
     }
 
     @Override
+    @JsonIgnore
     public List<Todo> getAllSharedItems() {
         return sharedTodos.findAll();
     }

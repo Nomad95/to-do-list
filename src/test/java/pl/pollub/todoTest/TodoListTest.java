@@ -26,27 +26,33 @@ public class TodoListTest {
     @Test
     public void shouldAddTaskToListAndBePresent(){
         //given
+        int sizeBeforeSave = todoList.getElements().size();
         Todo todo1 = todoList.save(createTodo(1,"test1"));
 
         //when
         Todo foundTodo = todoList.findOne(1);
+        int sizeAfterSave = todoList.getElements().size();
 
         //then
         assertTrue("Item isn't present in the list",todoList.findAll().contains(todo1));
         assertEquals("Items aren't same",todo1,foundTodo);
+        assertThat("Item wasn't added",sizeAfterSave,is(sizeBeforeSave + 1));
     }
 
     @Test
     public void shouldUpdateListItemWithSameId(){
         //given
         Todo todo1 = todoList.save(createTodo(1,"test1"));
+        int sizeBeforeUpdate = todoList.getElements().size();
 
         //when
         Todo todo2 = todoList.save(createTodo(1,"test2"));
         Todo foundTodo = todoList.findOne(1);
+        int sizeAfterUpdate = todoList.getElements().size();
 
         //then
         assertThat("Item wasn't updated",foundTodo, is(equalTo(todo2)));
+        assertThat("Item was actually added as new",sizeAfterUpdate,is(sizeBeforeUpdate));
     }
 
     @Test
@@ -54,12 +60,15 @@ public class TodoListTest {
         //given
         Todo todo1 = todoList.save(createTodo(1,"test1"));
         Todo todo2 = todoList.save(createTodo(2,"test2"));
+        int sizeBeforeRemove = todoList.getElements().size();
 
         //when
         todoList.remove(todo1);
+        int sizeAfterRemove = todoList.getElements().size();
 
         //then
         assertFalse("Item is still present",todoList.findAll().contains(todo1));
+        assertThat("Item is still present",sizeAfterRemove,is(sizeBeforeRemove - 1));
     }
 
     @Test
