@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.mockito.Matchers.eq;
+
 @RunWith(MockitoJUnitRunner.class)
 public class TaskServiceTest {
 
@@ -21,6 +23,9 @@ public class TaskServiceTest {
 
     @InjectMocks
     TaskService taskService;
+
+    @Mock
+    Summarizer summarizer;
 
     @Captor
     private ArgumentCaptor<List<String>> emailsCaptor;
@@ -38,6 +43,7 @@ public class TaskServiceTest {
         //check if email sent to users: [1,2,3]
 
         Mockito.verify(emailNotifier).notify(Mockito.eq(task.getId()), emailsCaptor.capture());
+        //NOTE teraz to nie działa bo używam tam fabryki
 
         HashSet<String> notified = new HashSet<>(emailsCaptor.getValue());
         HashSet<String> expected = new HashSet<>(Arrays.asList("user1@wp.pl", "user2@wp.pl", "user3@wp.pl"));
@@ -45,4 +51,17 @@ public class TaskServiceTest {
         Assert.assertEquals(expected, notified);
     }
 
+    @Test
+    public void whenTaskEndsSummarizerContainsThisTask(){
+        Task task = taskService.createTaskForUser(1, 2, 3);
+
+        Mockito.when(userService.getUserById(Mockito.anyInt())).then(invocationOnMock -> {
+            Integer id = invocationOnMock.getArgumentAt(0, int.class);
+            return new User(id, "user" + id + "@wp.pl");
+        });
+
+        taskService.completeTask(task.getId());
+
+        Mockito.verify(summarizer).noteCompletion(eq(task), eq(NotifyType.EMAIL), emailsCaptor.capture());
+    }
 }

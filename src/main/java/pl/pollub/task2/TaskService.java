@@ -1,13 +1,16 @@
 package pl.pollub.task2;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 public class TaskService {
+
+    public TaskService(UserService userService, EmailNotifier emailNotifier, Summarizer summarizer) {
+        this.userService = userService;
+        this.emailNotifier = emailNotifier;
+        this.summarizer = summarizer;
+    }
 
     private final UserService userService;
 
@@ -16,6 +19,8 @@ public class TaskService {
     private final Map<Integer, Task> tasks = new HashMap<>();
 
     private final AtomicInteger counter = new AtomicInteger();
+
+    private final Summarizer summarizer;
 
     public Task createTaskForUser(int userId, Integer... contributors){
         Task task = new Task(counter.incrementAndGet(), userId,
@@ -34,7 +39,7 @@ public class TaskService {
                                     .map(User::getEmail)
                                     .collect(Collectors.toSet());
 
-        emailNotifier.notify(taskId, emails);
+        summarizer.noteCompletion(task,NotifyType.EMAIL,emails);
     }
 
 }
