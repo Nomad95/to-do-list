@@ -9,4 +9,6 @@ public class User {
 
     private final String email;
 
+    private boolean hasPaidForSms;
+
 }

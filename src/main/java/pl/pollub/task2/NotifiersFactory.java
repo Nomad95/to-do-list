@@ -10,7 +10,7 @@ public final class NotifiersFactory {
             case EMAIL: return new EmailNotifier();
             case SMS: return new SmsNotifier();
             case PUSH: return new PushNotifier();
-            default: return null;
+            default: return null;//exception?
         }
     }
 }

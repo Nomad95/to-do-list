@@ -42,8 +42,8 @@ public class TaskServiceTest {
         taskService.completeTask(task.getId());
         //check if email sent to users: [1,2,3]
 
-        Mockito.verify(emailNotifier).notify(Mockito.eq(task.getId()), emailsCaptor.capture());
-        //NOTE teraz to nie działa bo używam tam fabryki
+        Mockito.verify(emailNotifier).notify(Mockito.eq(task));
+        //NOTE teraz to nie działa bo używam tam fabryki (?)
 
         HashSet<String> notified = new HashSet<>(emailsCaptor.getValue());
         HashSet<String> expected = new HashSet<>(Arrays.asList("user1@wp.pl", "user2@wp.pl", "user3@wp.pl"));

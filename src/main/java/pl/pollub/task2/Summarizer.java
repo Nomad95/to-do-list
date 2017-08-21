@@ -34,7 +34,7 @@ public class Summarizer {
 
     public void noteCompletion(Task task, NotifyType type,Collection<String> emails){
         completedTasks.put(task,new Date());
-        NotifiersFactory.getNotifierByType(type).notify(task.getId(),emails);
+        NotifiersFactory.getNotifierByType(type).notify(task);
     }
 
     public Map<Task,Date> getCompletedTasks() {
@@ -45,6 +45,7 @@ public class Summarizer {
     /*private static class LazySingletonHolder {
         public static Summarizer getInstance(){
             return Singleton.LazySingletonHolder.INSTANCE;
+            ...
         }
     }*/
 }
